@@ -56,11 +56,11 @@ Use tools for evidence, not speculation. If the task branches, finish or elimina
 
 If the work spans 3 or more independent subdomains, consider specialized sub-agents instead of forcing one generalist to carry the full task. Give each sub-agent the minimum context needed for its slice, keep its deliverable bounded, and keep the main agent responsible for coordination and final acceptance.
 
-Use automatic failure detection inside the loop:
+Use automatic failure detection inside the loop. Treat these triggers as hard stops:
 
 - `Loop detection`: if 3 consecutive actions are the same type and produce no new evidence, pause and repair the harness before continuing.
 - `Context overflow detection`: run the Context checkpoint after every execute-verify cycle and obey its thresholds.
-- `Premature completion detection`: if the mandatory gates in `§4` are not passed, do not claim completion.
+- `Premature completion detection`: if the mandatory gates in `Section 4` are not passed, do not claim completion.
 
 ### 4. Verify before declaring success
 
@@ -78,13 +78,13 @@ Run the strongest cheap validation available:
 
 If you cannot verify, say exactly what is unverified and why. Do not let "looks right" replace evidence.
 
-Mandatory gates:
+Mandatory gates. These are completion blockers, not suggestions:
 
 - `Coding tasks`: run at least one dry-run, compile, test, or lint check that exercises the changed path before declaring completion.
 - `File modification tasks`: inspect the diff and confirm only the intended scope changed.
 - `Delete or overwrite tasks`: read the current target first and confirm the destructive action before executing it.
 
-If a mandatory gate fails or cannot be executed, do not enter `§6` as a completed task. Report the task as blocked, partial, or needing approval instead.
+If a mandatory gate fails or cannot be executed, do not enter `Section 6` as a completed task. Report the task as blocked, partial, or needing approval instead.
 
 ### 5. Control risk
 
@@ -145,8 +145,9 @@ Avoid these failure modes:
 - Calling tools without a hypothesis for why they help.
 - Stopping after editing without verification.
 - Declaring success when mandatory gates were skipped.
-- Ignoring context pressure until the agent enters the Dumb Zone with hallucinations, looping, or malformed tool calls.
 - Claiming completion when key checks were skipped.
+- Ignoring context pressure until the agent enters the Dumb Zone with hallucinations, looping, or malformed tool calls.
+- Keeping 3 or more independent subdomains in one overloaded generalist instead of splitting bounded sub-agents.
 - Using a large generic wall of instructions instead of structured docs and targeted context.
 - Escalating to more agents or more model power before improving the harness.
 

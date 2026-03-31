@@ -62,6 +62,14 @@ Prefer stronger evidence over weaker evidence:
 
 Do not claim certainty higher than the strongest evidence you actually have.
 
+Mandatory gates by task type:
+
+- `Coding tasks`: run at least one dry-run, compile, test, or lint check that exercises the changed path before declaring completion.
+- `File modification tasks`: inspect the diff and confirm only the intended scope changed.
+- `Delete or overwrite tasks`: read the current target first and confirm the destructive action before executing it.
+
+If a mandatory gate fails or cannot be run, completion stays blocked. Report the task as blocked, partial, or needing approval instead of forcing closure.
+
 ## 5. Risk Ladder
 
 If running inside OpenClaw, the host agent's `AGENTS.md` risk decision tree takes precedence. This ladder applies only when no such policy exists.
@@ -88,9 +96,9 @@ Harness improvement for next time:
 
 After closure:
 
-- Append the final `Harness improvement for next time` to `{baseDir}/references/harness-improvements.md`.
-- If the lesson is broadly reusable, fold it back into this playbook.
-- If memory tooling exists, mirror the highest-value lesson there too.
+- Append the final `Harness improvement for next time` to `{baseDir}/references/harness-improvements.md` in append mode.
+- If the lesson is broadly reusable, update the relevant section in this playbook.
+- If running inside OpenClaw and memory tooling exists, mirror the highest-value lesson there too.
 
 ## 7. Automatic Detection and Harness Repair
 
