@@ -43,20 +43,24 @@ A reliable agent also needs a good surrounding system:
 
 This skill packages those habits into a reusable OpenClaw skill.
 
+It also adds hard gates around context pressure, validation, and closure so the agent is less free to "feel done" without evidence.
+
 ## Repository Layout
 
 ```text
 .
-├── SKILL.md
-├── agents/
-│   └── openai.yaml
-└── references/
-    └── harness-playbook.md
+|-- SKILL.md
+|-- agents/
+|   `-- openai.yaml
+`-- references/
+    |-- harness-improvements.md
+    `-- harness-playbook.md
 ```
 
 - `SKILL.md`: the main skill instructions
 - `agents/openai.yaml`: UI and invocation metadata
 - `references/harness-playbook.md`: extra checklist and playbook for longer or riskier tasks
+- `references/harness-improvements.md`: persistent log of harness improvements learned from completed tasks
 
 ## Install
 
@@ -97,9 +101,11 @@ This skill teaches the agent to:
 
 - define the goal, deliverable, constraints, and stop condition
 - avoid bloated context
+- stop and compact when context pressure gets too high
 - use tools for evidence instead of speculation
-- verify with the strongest cheap check available
+- verify with mandatory gates before claiming success
 - be explicit about gaps and residual risk
+- persist reusable lessons for the next run
 
 ## Notes
 
@@ -110,4 +116,3 @@ This skill teaches the agent to:
 
 - [OpenAI: Harness engineering](https://openai.com/index/harness-engineering/)
 - [OpenAI: Unlocking the Codex harness](https://openai.com/index/unlocking-the-codex-harness/)
-

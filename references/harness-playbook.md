@@ -44,6 +44,12 @@ If the loop repeats without new evidence, pause and change the harness:
 - ask for the missing permission
 - rewrite the verification plan
 
+Automatic triggers:
+
+- `Loop detection`: if 3 consecutive actions are the same type and there is no new evidence, stop the loop and repair the harness before trying again.
+- `Context overflow detection`: after each execute-verify cycle, estimate context pressure. Under `40%`, continue. At `40-60%`, compact notes or reduce the next context pack. Above `60%`, compact immediately or split the remaining independent work to focused sub-agents.
+- `Premature completion detection`: before declaring completion, confirm every mandatory gate in the active task type has passed.
+
 ## 4. Verification Ladder
 
 Prefer stronger evidence over weaker evidence:
@@ -58,12 +64,12 @@ Do not claim certainty higher than the strongest evidence you actually have.
 
 ## 5. Risk Ladder
 
-Treat actions differently by impact:
+If running inside OpenClaw, the host agent's `AGENTS.md` risk decision tree takes precedence. This ladder applies only when no such policy exists.
 
-- Read-only inspection: usually safe
-- Local reversible edits: usually safe with verification
-- External writes or remote side effects: use extra care
-- Destructive, irreversible, or costly actions: stop for approval when required
+- Prefer reversible actions over irreversible ones.
+- Read the current target before destructive writes, overwrites, or deletes.
+- Preview or dry-run changes before high-impact execution whenever possible.
+- Pause for approval before destructive, irreversible, or costly actions.
 
 When in doubt, choose the safer reversible path.
 
@@ -80,26 +86,38 @@ Next best action:
 Harness improvement for next time:
 ```
 
-## 7. Common Fixes When the Agent Struggles
+After closure:
 
-If the agent keeps drifting:
+- Append the final `Harness improvement for next time` to `{baseDir}/references/harness-improvements.md`.
+- If the lesson is broadly reusable, fold it back into this playbook.
+- If memory tooling exists, mirror the highest-value lesson there too.
+
+## 7. Automatic Detection and Harness Repair
+
+When a trigger fires, use the matching repair:
+
+`Loop detection`
 
 - tighten the task contract
-- cut down the context pack
-- shorten the execution loop
+- reduce scope to one hypothesis at a time
+- switch tools or add a stronger evidence source
+- rewrite the verification plan before resuming
 
-If the agent stops too early:
+`Context overflow detection`
 
-- make verification mandatory
-- define a clearer stop condition
+- compact working notes
+- reduce the next context pack
+- split remaining independent work to focused sub-agents if pressure stays high
+- stop adding new branches until pressure drops
 
-If the agent thrashes:
+`Premature completion detection`
 
-- reduce branching
-- switch to one hypothesis at a time
-- add a stronger evidence source
+- block completion
+- run or re-run the missing mandatory gates
+- downgrade the status to blocked or partial if the gates cannot pass
 
-If the agent produces polished but weak answers:
+`Polished but weak output`
 
 - require source-backed claims
 - prefer tool output over fluent narration
+- add a stronger verification step before resuming
