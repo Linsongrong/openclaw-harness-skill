@@ -1,0 +1,4 @@
+interface:
+  display_name: "Harness Engineering"
+  short_description: "Stabilize complex agent tasks with focused context, validation, and risk control"
+  default_prompt: "Use $harness-engineering to handle this task with a clear task contract, focused context, and explicit verification."
